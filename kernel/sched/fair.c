@@ -28,7 +28,6 @@
 
 #ifdef CONFIG_SMP
 static inline bool task_fits_max(struct task_struct *p, int cpu);
-static inline unsigned long boosted_task_util(struct task_struct *task);
 #endif /* CONFIG_SMP */
 
 #ifdef CONFIG_SCHED_WALT
@@ -6894,7 +6893,7 @@ static inline int select_idle_sibling_cstate_aware(struct task_struct *p,
 					goto next;
 
 				/* figure out if the task can fit here at all */
-				new_usage = boosted_task_util(p);
+				new_usage = uclamp_task(p);
 				capacity_orig = capacity_orig_of(i);
 
 				if (new_usage > capacity_orig)
